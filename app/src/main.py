@@ -28,7 +28,7 @@ def detectAndDisplay(frame):
             radius = int(round((w2 + h2)*0.25))
             frame = cv.circle(frame, eye_center, radius, (255, 0, 0 ), 4)
     cv.imshow('Capture - Face detection', frame)
-    
+
 parser = argparse.ArgumentParser(description='Code for Cascade Classifier tutorial.')
 parser.add_argument('--face_cascade', help='Path to face cascade.', default='data/haarcascades/haarcascade_frontalface_alt.xml')
 parser.add_argument('--eyes_cascade', help='Path to eyes cascade.', default='data/haarcascades/haarcascade_eye_tree_eyeglasses.xml')
