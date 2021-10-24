@@ -4,6 +4,7 @@ be developed for delivering items autonomously. If you'd like to contribute, ple
 in contact with ACM UTSA.
 
 ### Repository Structure
+* app: contains source code and Python package requirements for Docker.
 * src: Any code associated with this repository.
 * docs: Any documentation associated with code, installation, or any other process within this repository.
 * images: Images related to training, testing, masks, etc.
