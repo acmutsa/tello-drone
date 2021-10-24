@@ -14,4 +14,4 @@ for Python packages needed for this project.
 
 After cloning this repository, with tello-drone/ as your working directory, use the following commands in your terminal
 to build and run the docker image:
-#### `bash run.sh`
+#### `bash tello-drone.sh`
