@@ -14,7 +14,6 @@ RUN useradd -m $USERNAME && \
         usermod --shell /bin/bash $USERNAME && \
         usermod  --uid ${uid} $USERNAME && \
         groupmod --gid ${gid} $USERNAME
-#USER ${user}
 RUN adduser ${user} video
 RUN usermod -a -G video ${user}
 
@@ -30,10 +29,13 @@ RUN pip3 install -r requirements.txt
 RUN apt-get --assume-yes install software-properties-common
 RUN apt-get --assume-yes install v4l-utils
 USER ${user}
-#RUN apt-get install -qqy x11-apps
+
+# FIXME: testing .Xauthority missing issue
+RUN ~/.Xauthority
+RUN xauth generate:0 . trusted
+RUN xauth add ${HOST}:0 . `xxd -l 16 -p /dev/urandom`
+
 ENV DISPLAY :0
-#CMD
-#__EOF__
 
 # copy the content of local src directory to the working directory
 COPY app/src/ .
