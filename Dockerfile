@@ -28,12 +28,13 @@ RUN apt-get update
 RUN pip3 install -r requirements.txt
 RUN apt-get --assume-yes install software-properties-common
 RUN apt-get --assume-yes install v4l-utils
+RUN apt-get install xauth
 USER ${user}
 
 # FIXME: testing .Xauthority missing issue
-RUN ~/.Xauthority
-RUN xauth generate:0 . trusted
-RUN xauth add ${HOST}:0 . `xxd -l 16 -p /dev/urandom`
+#RUN ~/.Xauthority
+#RUN xauth generate:0 . trusted
+#RUN xauth add ${HOST}:0 . `xxd -l 16 -p /dev/urandom`
 
 ENV DISPLAY :0
 
