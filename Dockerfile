@@ -28,7 +28,7 @@ RUN apt-get update
 RUN pip3 install -r requirements.txt
 RUN apt-get --assume-yes install software-properties-common
 RUN apt-get --assume-yes install v4l-utils
-RUN apt-get install xauth
+RUN apt-get -y install xauth
 USER ${user}
 
 ENV DISPLAY :0
