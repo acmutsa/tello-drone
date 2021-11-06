@@ -31,7 +31,7 @@ RUN apt-get --assume-yes install v4l-utils
 RUN apt-get -y install xauth
 USER ${user}
 
-ENV DISPLAY :0
+ENV DISPLAY $DISPLAY
 
 # copy the content of local src directory to the working directory
 COPY app/src/ .
