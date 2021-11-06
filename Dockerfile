@@ -14,7 +14,6 @@ RUN useradd -m $USERNAME && \
         usermod --shell /bin/bash $USERNAME && \
         usermod  --uid ${uid} $USERNAME && \
         groupmod --gid ${gid} $USERNAME
-#USER ${user}
 RUN adduser ${user} video
 RUN usermod -a -G video ${user}
 
@@ -29,11 +28,10 @@ RUN apt-get update
 RUN pip3 install -r requirements.txt
 RUN apt-get --assume-yes install software-properties-common
 RUN apt-get --assume-yes install v4l-utils
+RUN apt-get -y install xauth
 USER ${user}
-#RUN apt-get install -qqy x11-apps
-ENV DISPLAY :0
-#CMD
-#__EOF__
+
+ENV DISPLAY $DISPLAY
 
 # copy the content of local src directory to the working directory
 COPY app/src/ .
