@@ -25,6 +25,7 @@ COPY app/requirements.txt .
 # install dependencies
 USER root
 RUN apt-get update
+RUN apt-get install ffmpeg libsm6 libxext6  -y
 RUN pip3 install -r requirements.txt
 RUN apt-get --assume-yes install software-properties-common
 RUN apt-get --assume-yes install v4l-utils
