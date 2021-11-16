@@ -2,22 +2,6 @@
 FROM python:3.8
 MAINTAINER "Zachary Seligman"
 
-# args picked from command line
-ARG user
-ARG uid
-ARG gid
-
-# add new user with the above credentials
-ENV USERNAME ${user}
-RUN useradd -m $USERNAME && \
-        echo "$USERNAME:$USERNAME" | chpasswd && \
-        usermod --shell /bin/bash $USERNAME && \
-        usermod  --uid ${uid} $USERNAME && \
-        groupmod --gid ${gid} $USERNAME
-RUN adduser ${user} video
-RUN usermod -a -G video ${user}
-
-# working directory in the container
 WORKDIR /tello-drone
 
 COPY app/requirements.txt .
@@ -34,7 +18,6 @@ RUN apt-get install -qqy x11-apps
 USER ${user}
 
 ENV DISPLAY $DISPLAY
-
 
 # copy the content of local src directory to the working directory
 COPY app/src/ .

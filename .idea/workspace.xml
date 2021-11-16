@@ -6,6 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="ef1551e5-e9ce-45c2-98a6-5fce19b0ef3a" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tello-drone.sh" beforeDir="false" afterPath="$PROJECT_DIR$/tello-drone.sh" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -108,6 +109,8 @@
       <workItem from="1636442570343" duration="1667000" />
       <workItem from="1636444258843" duration="859000" />
       <workItem from="1636445126457" duration="2302000" />
+      <workItem from="1636672445076" duration="68000" />
+      <workItem from="1636672526902" duration="744000" />
     </task>
     <servers />
   </component>
