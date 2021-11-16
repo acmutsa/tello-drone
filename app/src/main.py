@@ -14,16 +14,8 @@ full_body_cascade = cv2.CascadeClassifier()
 # Read the video stream
 detector = PoseDetector()
 cap = cv2.VideoCapture(camera)
-while True:
-    success, img = cap.read()
-    img = detector.findPose(img)
-    lmList, bboxInfo = detector.findPosition(img)
-    cv2.imshow("Window", img)
-    cv2.waitKey(1)
-cap.release()
-cv2.cv2.destroyAllWindows()
 
-if not full_body_cascade.load(cv.samples.findFile(body_cascade_name)):
+if not full_body_cascade.load(cv2.samples.findFile(body_cascade_name)):
     print('--(!)Error loading body cascade')
     exit(0)
 
@@ -37,8 +29,10 @@ while True:
         print('--(!) No captured frame -- Break!')
         break
 
-    detectAndDisplay(frame)
-
-    if cv.waitKey(10) == 27:
+    success, img = cap.read()
+    img = detector.findPose(img)
+    lmList, bboxInfo = detector.findPosition(img)
+    cv2.imshow("Window", img)
+    cv2.waitKey(1)
+    if cv2.waitKey(10) == 27:
         break
-
