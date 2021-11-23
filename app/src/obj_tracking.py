@@ -11,7 +11,7 @@ deadZone = 100
 startCounter = 0
 
 # Connect to tello, ensure no movement
-drone.= Tello()
+drone = Tello()
 drone.connect()
 drone.for_back_velocity = 0
 drone.left_right_velocity = 0
@@ -37,6 +37,7 @@ global dir;
 def empty(a):
     pass
 
+# Define trackbars (Hue, Saturation, threshholds, area)
 cv2.namedWindow("HSV")
 cv2.resizeWindow("HSV",640,240)
 cv2.createTrackbar("HUE Min","HSV",20,179,empty)
@@ -53,6 +54,7 @@ cv2.createTrackbar("Threshold2","Parameters",171,255,empty)
 cv2.createTrackbar("Area","Parameters",1750,30000,empty)
 
 
+# Display the true, masked, and edge image within one frame
 def stackImages(scale,imgArray):
     rows = len(imgArray)
     cols = len(imgArray[0])
@@ -87,6 +89,7 @@ def stackImages(scale,imgArray):
         ver = hor
     return ver
 
+# Find contours of object detected
 def getContours(img,imgContour):
     global dir
     contours, hierarchy = cv2.findContours(img, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
@@ -97,11 +100,11 @@ def getContours(img,imgContour):
             cv2.drawContours(imgContour, cnt, -1, (255, 0, 255), 7)
             peri = cv2.arcLength(cnt, True)
             approx = cv2.approxPolyDP(cnt, 0.02 * peri, True)
-            #print(len(approx))
             x , y , w, h = cv2.boundingRect(approx)
-            cx = int(x + (w / 2))  # CENTER X OF THE OBJECT
-            cy = int(y + (h / 2))  # CENTER X OF THE OBJECT
+            cx = int(x + (w / 2))  # center x of the object
+            cy = int(y + (h / 2))  # center y of the object
 
+            # Find location of object, move accordingly
             if (cx <int(frameWidth/2)-deadZone):
                 cv2.putText(imgContour, " GO LEFT " , (20, 50), cv2.FONT_HERSHEY_COMPLEX,1,(0, 0, 255), 3)
                 cv2.rectangle(imgContour,(0,int(frameHeight/2-deadZone)),(int(frameWidth/2)-deadZone,
@@ -143,9 +146,10 @@ def display(img):
     cv2.line(img, (0, int(frameHeight / 2) + deadZone), (frameWidth, int(frameHeight / 2) + deadZone),
             (255, 255, 0), 3)
 
+# Main loop
 while True:
 
-    # GET THE IMAGE FROM TELLO
+    # Get image from drone
     frame_read = drone.get_frame_read()
     myFrame = frame_read.frame
     img = cv2.resize(myFrame, (width, height))
@@ -182,6 +186,7 @@ while True:
        startCounter = 1
 
 
+    # Based on location of object, dir is set, so move accordingly 
     if dir == 1:
        drone.yaw_velocity = -60
     elif dir == 2:
@@ -195,7 +200,8 @@ while True:
        drone.for_back_velocity = 0
        drone.up_down_velocity = 0
        drone.yaw_velocity = 0
-   # SEND VELOCITY VALUES TO TELLO
+    
+    # Give velocity info to drone 
     if drone.send_rc_control:
        drone.send_rc_control(drone.left_right_velocity, 
                              drone.for_back_velocity, 
@@ -203,8 +209,9 @@ while True:
                              drone.yaw_velocity)
     print(dir)
 
+    # Stack images
     stack = stackImages(0.9, ([img, result], [imgDil, imgContour]))
-    cv2.imshow('Horizontal Stacking', stack)
+    cv2.imshow('Horizontal Stacking', stack) # Show images
 
     if cv2.waitKey(1) & 0xFF == ord('q'):
         drone.land()
