@@ -2,3 +2,4 @@ opencv-python==3.4.9.31
 argparse==1.4.0
 cvzone==1.5.2
 mediapipe==0.8.9
+djitellopy==2.4.0
